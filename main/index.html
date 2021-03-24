@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Global Thermonuclear Strike by Farhan Yusuf Nugroho</title>
+  <script src="https://cesium.com/downloads/cesiumjs/releases/1.79.1/Build/Cesium/Cesium.js"></script>
+  <script src="https://unpkg.com/@esri/arcgis-rest-request@3.0.0/dist/umd/request.umd.js"></script>
+  <script src="https://unpkg.com/@esri/arcgis-rest-auth@3.0.0/dist/umd/auth.umd.js"></script>
+  <script src="https://unpkg.com/@esri/arcgis-rest-demographics@3.0.0/dist/umd/demographics.umd.js"></script>
+  <link href="https://cesium.com/downloads/cesiumjs/releases/1.79.1/Build/Cesium/Widgets/widgets.css" rel="stylesheet">
+  <link href="style.css" rel="stylesheet">
+</head>
+<body>
+  <div id="cesiumContainer"></div>
+  <div id="cesiumHeader">
+  <h1>Single instance of MIRV payload from UGM-133 Trident II D-5 ballistic missile detonation</h1>
+  </div>
+  <div class="controlPanel">
+    <div>
+    <h3>Payload:</h3>
+      <p>Mk-4 RV with W76 mod 0 (W76-0) warhead</p>
+    </div>
+    <div>
+    <h3>Qty:</h3>
+      <p id="ammoCount">1</p>
+    </div>
+    <div>
+    <h3>Explosive Yield:</h3>
+      <p>100 kT</p>
+    </div>
+    <div>
+    <h3>Detonation Altitude:</h3>
+      <P>750m AGL (Airburst)</P>
+    </div>
+    <div>
+    <h3 id="estimatedCasualties"></h3>
+      <p id="totalPopulation"></p>
+    </div>
+    <div id="image">
+    </div>
+    <div id="detonateNuke">
+      <b>RIGHT CLICK ON MAP TO DETONATE WARHEAD</b>
+    </div>
+  </div>
+  <script src="app.js"></script>
+</body>
