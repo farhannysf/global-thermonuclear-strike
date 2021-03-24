@@ -13,14 +13,14 @@ WIP 3D GIS simulation of UGM-133 Trident II D-5 ballistic missile MIRV payload d
 
 This is my debut JavaScript web app and I aim to educate the public with this web app about the magnitude of a nuclear weapon effect, specifically from UGM-133 Trident II D-5 ballistic missile. 
 
-This is a Free and Open Source Software made in Indonesia as a gift to the Great Britain and the world in response of Great Britain's shift in its foreign policy and national security approach to increase cap on nuclear warheads from 180 to 260 for Global Britain in a Competitive Age. 
+This is a Free and Open Source Software made in Indonesia as a gift to the Great Britain and the world in response to Great Britain's shift in its foreign policy and national security approach to increase cap on nuclear warheads from 180 to 260 for Global Britain in a Competitive Age. 
 
 ---
 
 # Features
 At the moment, this simulation only models:
 
-* Static modelling of a single Mk-4 RV with 100 kT W76 mod 0 (W76-0) warhead detonation out of 8 possible RVs in MIRV payload of one UGM-133 Trident II D-5 ballistic missile and without multiple configuration possibilities of a warhead (variable yield)
+* Static blast effect modelling of a single Mk-4 RV with 100 kT W76 mod 0 (W76-0) warhead detonation out of 8 possible RVs in MIRV payload of one UGM-133 Trident II D-5 ballistic missile and without multiple configuration possibilities of a warhead (variable yield)
 
 * Fixed detonation altitude, airburst at 750m AGL
 
@@ -30,14 +30,12 @@ At the moment, this simulation only models:
 
 * No other effects, such as thermal damage or fallout levels are included yet
 
-* Currently only optimized for Desktop use with 1920x1080 resolution
-
 * From the current features listed above, it is obvious that there are so many features still WIP. This is a bare MVP that is very primitive and I am looking for open collaboration for much more accurate modelling, more dynamic modelling taking into account temporal changes in the states of the object, as well as improved frontend design and responsiveness
 
 ---
 
 # How to Use
-
+* Currently only optimized for Desktop use with 1920x1080 resolution
 * Right click on map to detonate the warhead
 * Left click on the resulting radii, mushroom cloud to inspect its properties
 
