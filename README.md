@@ -1,11 +1,21 @@
 # Global Thermonuclear Strike (Docs still WIP)
 WIP 3D GIS simulation of UGM-133 Trident II D-5 ballistic missile MIRV payload detonation using Cesium in the very early state by Farhan Yusuf Nugroho
 
+![main](https://raw.githubusercontent.com/farhannysf/global-thermonuclear-strike/main/assets/docs/main.png)
+
+<p align="center">
+  <a href="https://global-thermonuclear-strike.netlify.app/"><b>Shall we play a game? Try it live here!</b></a>
+</p>
+
+---
+
 # Background
 
 This is my debut JavaScript web app and I aim to educate the public with this web app about the magnitude of a nuclear weapon effect, specifically from UGM-133 Trident II D-5 ballistic missile. 
 
 This is a Free and Open Source Software made in Indonesia as a gift to the Great Britain and the world in response of Great Britain's shift in its foreign policy and national security approach to increase cap on nuclear warheads from 180 to 260 for Global Britain in a Competitive Age. 
+
+---
 
 # Features
 At the moment, this simulation only models:
@@ -22,10 +32,14 @@ At the moment, this simulation only models:
 
 * From the current features listed above, it is obvious that there are so many features still WIP. This is a bare MVP that is very primitive and I am looking for open collaboration for much more accurate modelling, more dynamic modelling taking into account temporal changes in the states of the object, as well as improved frontend design and responsiveness
 
+---
+
 # How to Use
 
 * Right click on map to detonate the warhead
 * Left click on the resulting radii, mushroom cloud to inspect its properties
+
+---
 
 # References
 * The Effects of Nuclear Weapons. (1977). United States: Department of Defense.
