@@ -30,6 +30,8 @@ At the moment, this simulation only models:
 
 * No other effects, such as thermal damage or fallout levels are included yet
 
+* Currently only optimized for Desktop use with 1920x1080 resolution
+
 * From the current features listed above, it is obvious that there are so many features still WIP. This is a bare MVP that is very primitive and I am looking for open collaboration for much more accurate modelling, more dynamic modelling taking into account temporal changes in the states of the object, as well as improved frontend design and responsiveness
 
 ---
