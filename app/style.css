@@ -1,21 +1,33 @@
 html, body, #cesiumContainer {
-    width: 100%; height: 100%; margin: 0; padding: 0;
-    font-family: sans-serif; color: #edffff;
+    width: 100%; 
+    height: 100%; 
+    font-size:1.4vh;
+    margin: 0; 
+    padding: 0;
+    font-family: sans-serif; 
+    color: #edffff;
   }
   .cesium-infoBox-iframe {
     height: 300px !important;
     overflow: hidden;
   }
   .controlPanel {
+    max-width: 50vw;
     position: absolute;
-    top: 100px;
-    left: 5px;
+    top: 0px;
+    margin-top: 5%;
     background: rgba(42, 42, 42, 0.8);
     padding: 5px 8px;
     border-radius: 5px;
     border: none;
   }
-
+  #detonateText {
+    color:red
+  }
+  .img {
+    max-width: 20vw;
+    max-height: 50vh;
+  }
   #cesiumHeader {
     position: absolute;
     top: 0px;
