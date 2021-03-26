@@ -42,42 +42,49 @@ var countsClicked = 0;
 var warheadYield = 100;
 var detonationAltitude = 750
 
-viewer.scene.canvas.addEventListener('contextmenu', (event) => {
-  if (countsClicked == 1) {
-    return;
-  }
-  ++countsClicked;
-  // console.log(countsClicked)
-  event.preventDefault();
-  const clickPosition  = new Cesium.Cartesian2(event.clientX, event.clientY);
-  const selectedLocation = viewer.scene.pickPosition(clickPosition);
-  
-  setMarkerInPos(Cesium.Cartographic.fromCartesian(selectedLocation));
+function armNuke() {
+  var detonateText = document.createElement("P");
+  detonateText.id = "detonateText";
+  detonateText.textContent = "RIGHT CLICK / DOUBLE TAP ON MAP TO DETONATE WARHEAD";
+  var detonateNuke = document.getElementById("detonateNuke");
+  detonateNuke.replaceWith(detonateText);
+  viewer.scene.canvas.addEventListener('contextmenu', (event) => {
+    if (countsClicked == 1) {
+      return;
+    }
+    ++countsClicked;
+    // console.log(countsClicked)
+    event.preventDefault();
+    const clickPosition = new Cesium.Cartesian2(event.clientX, event.clientY);
+    const selectedLocation = viewer.scene.pickPosition(clickPosition);
+    
+    setMarkerInPos(Cesium.Cartographic.fromCartesian(selectedLocation));
   }, false);
-  
+    
   viewer.scene.canvas.addEventListener("touchstart", tapHandler)
-  
+    
   var tapedTwice = false;
-  
+    
   function tapHandler(event) {
     if (countsClicked == 1) {
       return;
     }
-  
-    if(!tapedTwice) {
-        tapedTwice = true;
-        setTimeout( function() { tapedTwice = false; }, 300 );
-        return false;
+    
+    if (!tapedTwice) {
+      tapedTwice = true;
+      setTimeout(function () { tapedTwice = false; }, 300);
+      return false;
     }
     event.preventDefault();
     ++countsClicked;
-    const touchPosition  = new Cesium.Cartesian2(event.touches[0].clientX, event.touches[0].clientY);
+    const touchPosition = new Cesium.Cartesian2(event.touches[0].clientX, event.touches[0].clientY);
     const selectedLocation = viewer.scene.pickPosition(touchPosition);
     setMarkerInPos(Cesium.Cartographic.fromCartesian(selectedLocation));
-   }
+  }
+}
 
-function setMarkerInPos(positionCartographic){
-viewer.pickTranslucentDepth = true;
+  function setMarkerInPos(positionCartographic){
+  viewer.pickTranslucentDepth = true;
 
 ring1Radius_km = Math.pow(warheadYield,0.33)*0.24; // Blast Wave Effects Calculator by Jean M. Bele, Physics Dept., Laboratory for Nuclear Science, MIT https://nuclearweaponsedproj.mit.edu/Node/104
 // console.log(ring1Radius_km)
@@ -323,7 +330,7 @@ arcgisRest.queryDemographicData({
     demographicsData = response["results"][0]['value']['FeatureSet'][0]['features'][0]['attributes'];
   }
   catch(err) {
-    document.getElementById("estimatedCasualties").textContent = "Cannot Estimate Casualties"
+    document.getElementById("estimatedCasualties").textContent = "Cannot Estimate Casualties:"
     document.getElementById("totalPopulation").textContent = "No population data found"
     createreloadButton();
   }

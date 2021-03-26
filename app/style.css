@@ -22,7 +22,8 @@ html, body, #cesiumContainer {
     border: none;
   }
   #detonateText {
-    color:red
+    color:red;
+    font-weight: bold;
   }
   .img {
     max-width: 20vw;
