@@ -5,6 +5,17 @@ const authentication = new arcgisRest.ApiKey({
   key: apiKey
 });
 
+function appendFarhan() {
+  var node = document.createElement("A");
+  node.id = "Farhan";
+  node.href = "https://github.com/farhannysf/global-thermonuclear-strike"
+  var textnode = document.createTextNode("By Farhan Yusuf Nugroho");
+  textnode.href = "url"
+  var cesium_textContainer = document.getElementsByClassName("cesium-widget-credits");
+  node.appendChild(textnode);
+  cesium_textContainer[0].appendChild(node);;
+}
+
 function createreloadButton() {
   document.getElementById("ammoCount").textContent = 0
   var btn = document.createElement("BUTTON");
@@ -25,6 +36,7 @@ terrainProvider: new Cesium.ArcGISTiledElevationTerrainProvider({
     "https://elevation3d.arcgis.com/arcgis/rest/services/WorldElevation3D/Terrain3D/ImageServer",
 }),
 });
+console.log(appendFarhan());
 viewer.scene.primitives.add(Cesium.createOsmBuildings());
 var countsClicked = 0;
 var warheadYield = 100;

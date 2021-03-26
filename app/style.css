@@ -37,6 +37,10 @@ html, body, #cesiumContainer {
     border-radius: 5px;
     font-size:0.5vw;
   }
+  #Farhan {
+    display:inline;
+    padding-left:5px;
+  }
   label {
     cursor: pointer;
   }
