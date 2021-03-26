@@ -36,23 +36,45 @@ terrainProvider: new Cesium.ArcGISTiledElevationTerrainProvider({
     "https://elevation3d.arcgis.com/arcgis/rest/services/WorldElevation3D/Terrain3D/ImageServer",
 }),
 });
-console.log(appendFarhan());
+appendFarhan();
 viewer.scene.primitives.add(Cesium.createOsmBuildings());
 var countsClicked = 0;
 var warheadYield = 100;
 var detonationAltitude = 750
-viewer.scene.canvas.addEventListener('contextmenu', (event) => {
-if (countsClicked == 1) {
-  return;
-}
-++countsClicked;
-// console.log(countsClicked)
-event.preventDefault();
-const mousePosition  = new Cesium.Cartesian2(event.clientX, event.clientY);
-const selectedLocation = viewer.scene.pickPosition(mousePosition);
 
-setMarkerInPos(Cesium.Cartographic.fromCartesian(selectedLocation));
-}, false);
+viewer.scene.canvas.addEventListener('contextmenu', (event) => {
+  if (countsClicked == 1) {
+    return;
+  }
+  ++countsClicked;
+  // console.log(countsClicked)
+  event.preventDefault();
+  const clickPosition  = new Cesium.Cartesian2(event.clientX, event.clientY);
+  const selectedLocation = viewer.scene.pickPosition(clickPosition);
+  
+  setMarkerInPos(Cesium.Cartographic.fromCartesian(selectedLocation));
+  }, false);
+  
+  viewer.scene.canvas.addEventListener("touchstart", tapHandler)
+  
+  var tapedTwice = false;
+  
+  function tapHandler(event) {
+    if (countsClicked == 1) {
+      return;
+    }
+  
+    if(!tapedTwice) {
+        tapedTwice = true;
+        setTimeout( function() { tapedTwice = false; }, 300 );
+        return false;
+    }
+    event.preventDefault();
+    ++countsClicked;
+    const touchPosition  = new Cesium.Cartesian2(event.touches[0].clientX, event.touches[0].clientY);
+    const selectedLocation = viewer.scene.pickPosition(touchPosition);
+    setMarkerInPos(Cesium.Cartographic.fromCartesian(selectedLocation));
+   }
 
 function setMarkerInPos(positionCartographic){
 viewer.pickTranslucentDepth = true;
