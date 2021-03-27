@@ -9,9 +9,8 @@ function appendFarhan() {
   var node = document.createElement("A");
   node.id = "Farhan";
   node.href = "https://github.com/farhannysf/global-thermonuclear-strike"
+  node.target = "_blank"
   var textnode = document.createTextNode("By Farhan Yusuf Nugroho");
-  textnode.href = "url"
-  textnode.target = "_blank"
   var cesium_textContainer = document.getElementsByClassName("cesium-widget-credits");
   node.appendChild(textnode);
   cesium_textContainer[0].appendChild(node);;
