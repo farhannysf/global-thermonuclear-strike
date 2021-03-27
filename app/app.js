@@ -1,5 +1,5 @@
 Cesium.Ion.defaultAccessToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJiNTJhMGZlYS03YzBhLTRkMDItYjdhNy1jNTY5YzYzMmYxMzEiLCJpZCI6NDYzODMsImlhdCI6MTYxNjA4MDAwMX0.mEt-nrCRpc-SR9SkguIhjLOAJkLoWDienK5kOGWZjXo';
-const apiKey = "AAPKe4efdcd112a349a38294523ff38260d1948d0MjM6KlTBKflBCPU_Qe4D--P2O8QIKz0AM54am8acXDRa6uNb6xktmqcE9Jq"; // Referrer header restricted
+const apiKey = "AAPKeb55cb51637e49d3bca9d10b1254eaa6yaEpF2Mf1aXs85FffEZcBXZl_Me1REzmg_5czbl5QqSQQ7KcdlKvWOlKHnhdm4Lz"; // Referrer header restricted
 
 const authentication = new arcgisRest.ApiKey({
   key: apiKey
@@ -11,6 +11,7 @@ function appendFarhan() {
   node.href = "https://github.com/farhannysf/global-thermonuclear-strike"
   var textnode = document.createTextNode("By Farhan Yusuf Nugroho");
   textnode.href = "url"
+  textnode.target = "_blank"
   var cesium_textContainer = document.getElementsByClassName("cesium-widget-credits");
   node.appendChild(textnode);
   cesium_textContainer[0].appendChild(node);;
