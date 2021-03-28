@@ -13,29 +13,50 @@ function appendFarhan() {
   var textnode = document.createTextNode("By Farhan Yusuf Nugroho");
   var cesium_textContainer = document.getElementsByClassName("cesium-widget-credits");
   node.appendChild(textnode);
-  cesium_textContainer[0].appendChild(node);;
+  cesium_textContainer[0].appendChild(node);
 }
 
 function createreloadButton() {
   document.getElementById("ammoCount").textContent = 0
   var btn = document.createElement("BUTTON");
   btn.innerHTML = "Reload Weapon";
-  btn.onclick = function() {window.location.reload()};
+  btn.id = "reloadButton";
+  btn.onclick = function() {reloadWeapon()};
   var detonateNuke = document.getElementById("detonateText");
   detonateNuke.replaceWith(btn)
+}
+
+function createarmWarhead_button() {
+  document.getElementById("ammoCount").textContent = 1
+  var btn = document.createElement("BUTTON");
+  btn.innerHTML = "Arm Warhead";
+  btn.id = "armNuke_button";
+  btn.onclick = function() {armNuke()};
+  var armWarhead = document.getElementById("reloadButton");
+  armWarhead.replaceWith(btn)
 }
 
 function detonateText() {
   var detonateText = document.createElement("P");
   detonateText.id = "detonateText";
   detonateText.textContent = "RIGHT CLICK / DOUBLE TAP ON MAP TO DETONATE WARHEAD";
-  var detonateNuke = document.getElementById("detonateNuke");
-  detonateNuke.replaceWith(detonateText);
+  var armNuke_button = document.getElementById("armNuke_button");
+  armNuke_button.replaceWith(detonateText);
 }
 
 function kmtom(kilometer){
   var meter = kilometer*1000;
   return meter
+}
+
+function estimatedCasualties(headerText, bodyText) {
+  document.getElementById("estimatedCasualties").textContent = headerText
+  document.getElementById("totalPopulation").textContent = bodyText
+  var img = document.createElement("img");
+  img.id = "yield-distance-effect"
+  img.src = "assets/yield-distance-effect.png"; // Graphs of Nuclear Weapons Effects by Dr. Wm. Robert Johnston http://www.johnstonsarchive.net/nuclear/nukgr3.pdf
+  img.className = "img"
+  var src = document.getElementById("yield-distance-effect").replaceWith(img);
 }
 
 function ringDescription(kpa, blast_structuralDamage) {
@@ -107,6 +128,18 @@ function cesiumMarker(labelId, labelName, positionCartographic, detonationAltitu
   });  
 }
 
+function removeObjects_iterator(value, index, array) {
+  viewer.entities.removeById(value)
+}
+
+function reloadWeapon() {
+  var objectsId = ["hypocenter", "airburst", "mcstem", "mchead", "ring1", "ring2", "ring3", "ring4", "ring5"];
+  objectsId.forEach(removeObjects_iterator);
+  estimatedCasualties(null, null);
+  var img = document.getElementById("yield-distance-effect").removeAttribute("src")
+  createarmWarhead_button();
+}
+
 var viewer = new Cesium.Viewer("cesiumContainer", {
   terrainProvider: new Cesium.ArcGISTiledElevationTerrainProvider({
       url:
@@ -116,12 +149,12 @@ var viewer = new Cesium.Viewer("cesiumContainer", {
 
 appendFarhan();
 viewer.scene.primitives.add(Cesium.createOsmBuildings());
-var countsClicked = 0;
 var warheadYield = 100;
 var detonationAltitude = 750
 
 // Fuzing mechanism 
 function armNuke() {
+  var countsClicked = 0;
   detonateText();
   viewer.scene.canvas.addEventListener('contextmenu', (event) => {
     if (countsClicked == 1) {
@@ -247,6 +280,7 @@ function setMarkerInPos(positionCartographic){
   </p>`; // Nukemap by Alex Wellerstein https://nuclearsecrecy.com/nukemap/
 
   var mcStem = viewer.entities.add({
+    id:"mcstem",
     name: "Fireball Radius, Mushroom Cloud Stem",
     description: mushroomCloud_description(mushroomCloud_stem),
     position: Cesium.Cartesian3.fromRadians(positionCartographic.longitude, positionCartographic.latitude),
@@ -275,6 +309,7 @@ function setMarkerInPos(positionCartographic){
   </p>'; // Nukemap by Alex Wellerstein https://nuclearsecrecy.com/nukemap/
 
   var mcHead = viewer.entities.add({
+    id: "mchead",
     name: "Mushroom Cloud Head",
     description: mushroomCloud_description(mushroomCloud_head),
     position: Cesium.Cartesian3.fromRadians(positionCartographic.longitude, positionCartographic.latitude, 11800), // Nukemap by Alex Wellerstein https://nuclearsecrecy.com/nukemap/
@@ -300,21 +335,18 @@ function setMarkerInPos(positionCartographic){
     // console.log("Demographics:", response);
     try {
       demographicsData = response["results"][0]['value']['FeatureSet'][0]['features'][0]['attributes'];
-    }
-    catch(err) {
-      document.getElementById("estimatedCasualties").textContent = "Cannot Estimate Casualties:"
-      document.getElementById("totalPopulation").textContent = "No population data found"
+      totalPopulation = demographicsData.TOTPOP.toLocaleString()
+      var estimatedCasualties_headerText = "Estimated Casualties:";
+      var estimatedCasualties_bodyText = `${totalPopulation} people within 3.6 km radius dead`;
+      estimatedCasualties(estimatedCasualties_headerText, estimatedCasualties_bodyText);
       createreloadButton();
     }
-    
-    totalPopulation = demographicsData.TOTPOP.toLocaleString()
-    document.getElementById("estimatedCasualties").textContent = "Estimated Casualties:"
-    document.getElementById("totalPopulation").textContent = totalPopulation + " people within 3.6 km radius dead"
-    var img = document.createElement("img");
-    img.src = "assets/yield-distance-effect.png"; // Graphs of Nuclear Weapons Effects by Dr. Wm. Robert Johnston http://www.johnstonsarchive.net/nuclear/nukgr3.pdf
-    img.className = "img"
-    var src = document.getElementById("image").appendChild(img);
-    createreloadButton();
+    catch (err) {
+      var error_headerText = "Cannot Estimate Casualties:";
+      var error_bodyText = "No population data found"
+      estimatedCasualties(error_headerText, error_bodyText)
+      createreloadButton();
+    }
     // console.log(demographicsData);
   });
 
