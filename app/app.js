@@ -69,6 +69,20 @@ function mushroomCloud_description(mushroomCloud_body) {
   return mushroomCloud_description
 }
 
+function ring(ringId, positionCartographic, ringRadius_km, ring_kpa, ring_blast_structuralDamage, ringRadius_m, ringColor, ringColor_alpha) {
+  viewer.entities.add({
+    id: ringId,
+    position: Cesium.Cartesian3.fromRadians(positionCartographic.longitude, positionCartographic.latitude, 10),
+    name: ringRadius_km.toFixed(1) + " km radius",
+    description: ringDescription(ring_kpa, ring_blast_structuralDamage),
+    ellipse: {
+      semiMinorAxis: ringRadius_m,
+      semiMajorAxis: ringRadius_m,
+      material: Cesium.Color[ringColor].withAlpha(ringColor_alpha),
+    },
+  });
+}
+
 var viewer = new Cesium.Viewer("cesiumContainer", {
   terrainProvider: new Cesium.ArcGISTiledElevationTerrainProvider({
       url:
@@ -122,90 +136,60 @@ function armNuke() {
 
 function setMarkerInPos(positionCartographic){
   viewer.pickTranslucentDepth = true;
+  var ring1Id = "ring1"
   var ring1Radius_km = Math.pow(warheadYield,0.33)*0.24; // Blast Wave Effects Calculator by Jean M. Bele, Physics Dept., Laboratory for Nuclear Science, MIT https://nuclearweaponsedproj.mit.edu/Node/104
   // console.log(ring1Radius_km)
   var ring1Radius_m = kmtom(ring1Radius_km);
   var ring1_kpa = 137.89; // 20 psi
-  var ring1_blast_strucuturalDamage = "Heavily built concrete buildings are severely damaged or demolished.";
+  var ring1_blast_structuralDamage = "Heavily built concrete buildings are severely damaged or demolished.";
   // console.log(ring1Radius_m)
-  var ring1 = viewer.entities.add({
-    position: Cesium.Cartesian3.fromRadians(positionCartographic.longitude, positionCartographic.latitude, 10),
-    name: ring1Radius_km.toFixed(1) + " km radius",
-    description: ringDescription(ring1_kpa, ring1_blast_strucuturalDamage),
-    ellipse: {
-      semiMinorAxis: ring1Radius_m,
-      semiMajorAxis: ring1Radius_m,
-      material: Cesium.Color.RED.withAlpha(0.3),
-    },
-  });
+  ring1Color = "RED";
+  ring1Color_alpha = 0.3;
+  ring(ring1Id, positionCartographic, ring1Radius_km, ring1_kpa, ring1_blast_structuralDamage, ring1Radius_m, ring1Color, ring1Color_alpha);
 
-  var ring2Radius_km = Math.pow(warheadYield,0.33)* 0.37; // Blast Wave Effects Calculator by Jean M. Bele, Physics Dept., Laboratory for Nuclear Science, MIT https://nuclearweaponsedproj.mit.edu/Node/104
+  var ring2Id = "ring2"
+  var ring2Radius_km = Math.pow(warheadYield, 0.33) * 0.37; // Blast Wave Effects Calculator by Jean M. Bele, Physics Dept., Laboratory for Nuclear Science, MIT https://nuclearweaponsedproj.mit.edu/Node/104
   // console.log(ring2Radius_km)
   var ring2Radius_m = kmtom(ring2Radius_km);
   // console.log(ring2Radius_m)
   var ring2_kpa = 68.95; // 10 psi
   var ring2_blast_structuralDamage = "Reinforced concrete buildings are severely damaged or demolished.";
-  var ring2 = viewer.entities.add({
-    position: Cesium.Cartesian3.fromRadians(positionCartographic.longitude, positionCartographic.latitude, 10),
-    name: ring2Radius_km.toFixed(1) + " km radius",
-    description: ringDescription(ring2_kpa, ring2_blast_structuralDamage),
-    ellipse: {
-      semiMinorAxis: ring2Radius_m,
-      semiMajorAxis: ring2Radius_m,
-      material: Cesium.Color.RED.withAlpha(0.2),
-    },
-  });
+  var ring2Color = "RED";
+  var ring2Color_alpha = 0.2;
+  ring(ring2Id, positionCartographic, ring2Radius_km, ring2_kpa, ring2_blast_structuralDamage, ring2Radius_m, ring2Color, ring2Color_alpha);
 
+  var ring3Id = "ring3"
   var ring3Radius_km = Math.pow(warheadYield,0.33)*0.57; // Blast Wave Effects Calculator by Jean M. Bele, Physics Dept., Laboratory for Nuclear Science, MIT https://nuclearweaponsedproj.mit.edu/Node/104
   // console.log(ring3Radius_km);
   var ring3Radius_m = kmtom(ring3Radius_km);
   // console.log(ring3Radius_m)
   var ring3_kpa = 34.47; // 5 psi
   var ring3_blast_structuralDamage = "Most buildings collapse.";
-  var ring3 = viewer.entities.add({
-    position: Cesium.Cartesian3.fromRadians(positionCartographic.longitude, positionCartographic.latitude, 10),
-    name: ring3Radius_km.toFixed(1) + " km radius",
-    description: ringDescription(ring3_kpa, ring3_blast_structuralDamage),
-    ellipse: {
-      semiMinorAxis: ring3Radius_m,
-      semiMajorAxis: ring3Radius_m,
-      material: Cesium.Color.RED.withAlpha(0.2),
-    },
-  });
+  var ring3Color = "RED";
+  var ring3Color_alpha = 0.2;
+  ring(ring3Id, positionCartographic, ring3Radius_km, ring3_kpa, ring3_blast_structuralDamage, ring3Radius_m, ring3Color, ring3Color_alpha);
 
+  var ring4Id = "ring4"
   var ring4Radius_km = Math.pow(warheadYield,0.33)*0.79; // Blast Wave Effects Calculator by Jean M. Bele, Physics Dept., Laboratory for Nuclear Science, MIT https://nuclearweaponsedproj.mit.edu/Node/104
   // console.log(ring4Radius_km);
   ring4Radius_m = kmtom(ring4Radius_km);
   // console.log(ring4Radius_m)
   var ring4_kpa = 20.68; // 3 psi
   var ring4_blast_structuralDamage = "Residential structures collapse.";
-  var ring4 = viewer.entities.add({
-    position: Cesium.Cartesian3.fromRadians(positionCartographic.longitude, positionCartographic.latitude, 10),
-    name: ring4Radius_km.toFixed(1) + " km radius",
-    description: ringDescription(ring4_kpa, ring4_blast_structuralDamage),
-    ellipse: {
-      semiMinorAxis: ring4Radius_m,
-      semiMajorAxis: ring4Radius_m,
-      material: Cesium.Color.RED.withAlpha(0.3),
-    },
-  });
+  var ring4Color = "RED";
+  var ring4Color_alpha = 0.3;
+  ring(ring4Id, positionCartographic, ring4Radius_km, ring4_kpa, ring4_blast_structuralDamage, ring4Radius_m, ring4Color, ring4Color_alpha);
 
-  var ring5Radius_km = Math.pow(warheadYield,0.33)*1.66; // Blast Wave Effects Calculator by Jean M. Bele, Physics Dept., Laboratory for Nuclear Science, MIT https://nuclearweaponsedproj.mit.edu/Node/104
+  var ring5Id = "ring5"
+  var ring5Radius_km = Math.pow(warheadYield, 0.33) * 1.66; // Blast Wave Effects Calculator by Jean M. Bele, Physics Dept., Laboratory for Nuclear Science, MIT https://nuclearweaponsedproj.mit.edu/Node/104
   // console.log(ring5Radius_km)
   ring5Radius_m = kmtom(ring5Radius_km);
   // console.log(ring5Radius_m)
   var ring5_kpa = 6.89; // 1 psi
-  var ring5_blast_structuralDamage = "Window glass shatters";
-  var ring5 = viewer.entities.add({
-    position: Cesium.Cartesian3.fromRadians(positionCartographic.longitude, positionCartographic.latitude, 10),
-    name: ring5Radius_km.toFixed(1) + " km radius",
-    description: ringDescription(ring5_kpa, ring5_blast_structuralDamage),
-    ellipse: {
-      semiMinorAxis: ring5Radius_m,
-      semiMajorAxis: ring5Radius_m,
-      material: Cesium.Color.YELLOW.withAlpha(0.2),
-    },
-  });
+  var ring5_blast_structuralDamage = "Window glass shatters.";
+  var ring5Color = "YELLOW";
+  var ring5Color_alpha = 0.2;
+  ring(ring5Id, positionCartographic, ring5Radius_km, ring5_kpa, ring5_blast_structuralDamage, ring5Radius_m, ring5Color, ring5Color_alpha);
 
   fireballRadius = (Math.pow(warheadYield,0.4)*110)*0.3048; // Nuclear Fireball Calculator by Jean M. Bele, Physics Dept., Laboratory for Nuclear Science, MIT https://nuclearweaponsedproj.mit.edu/Node/105
   // console.log(fireballRadius)
