@@ -83,6 +83,30 @@ function ring(ringId, positionCartographic, ringRadius_km, ring_kpa, ring_blast_
   });
 }
 
+function cesiumMarker(labelId, labelName, positionCartographic, detonationAltitude) {
+  viewer.entities.add({
+    id: labelId,
+    name : labelName,
+    position : Cesium.Cartesian3.fromRadians(positionCartographic.longitude, positionCartographic.latitude, detonationAltitude),
+    point : {
+      pixelSize : 5,
+      color : Cesium.Color.RED,
+      outlineColor : Cesium.Color.WHITE,
+      outlineWidth : 2,
+      heightReference: Cesium.HeightReference.RELATIVE_TO_GROUND 
+    },
+    label : {
+      text : labelName,
+      font : '14pt monospace',
+      style: Cesium.LabelStyle.FILL_AND_OUTLINE,
+      outlineWidth : 2,
+      verticalOrigin : Cesium.VerticalOrigin.BOTTOM,
+      pixelOffset : new Cesium.Cartesian2(0, -9),
+      heightReference: Cesium.HeightReference.RELATIVE_TO_GROUND 
+    }
+  });  
+}
+
 var viewer = new Cesium.Viewer("cesiumContainer", {
   terrainProvider: new Cesium.ArcGISTiledElevationTerrainProvider({
       url:
@@ -294,47 +318,13 @@ function setMarkerInPos(positionCartographic){
     // console.log(demographicsData);
   });
 
-  const hypocenterMarker = viewer.entities.add({
-    name : 'HYPOCENTER',
-    position : Cesium.Cartesian3.fromRadians(positionCartographic.longitude, positionCartographic.latitude),
-    point : {
-      pixelSize : 5,
-      color : Cesium.Color.RED,
-      outlineColor : Cesium.Color.WHITE,
-      outlineWidth : 2,
-      heightReference: Cesium.HeightReference.RELATIVE_TO_GROUND 
-    },
-    label : {
-      text : 'HYPOCENTER',
-      font : '14pt monospace',
-      style: Cesium.LabelStyle.FILL_AND_OUTLINE,
-      outlineWidth : 2,
-      verticalOrigin : Cesium.VerticalOrigin.BOTTOM,
-      pixelOffset : new Cesium.Cartesian2(0, -9),
-      heightReference: Cesium.HeightReference.RELATIVE_TO_GROUND 
-    }
-  });
+  var hypocenterMarker_id = "hypocenter";
+  var hypocenterLabel_name = "HYPOCENTER"
+  cesiumMarker(hypocenterMarker_id, hypocenterLabel_name, positionCartographic, null);
 
-  const airburstMarker = viewer.entities.add({
-    name : 'AIRBURST',
-    position : Cesium.Cartesian3.fromRadians(positionCartographic.longitude, positionCartographic.latitude, detonationAltitude),
-    point : {
-      pixelSize : 5,
-      color : Cesium.Color.RED,
-      outlineColor : Cesium.Color.WHITE,
-      outlineWidth : 2,
-      heightReference: Cesium.HeightReference.RELATIVE_TO_GROUND 
-    },
-    label : {
-      text : 'AIRBURST',
-      font : '14pt monospace',
-      style: Cesium.LabelStyle.FILL_AND_OUTLINE,
-      outlineWidth : 2,
-      verticalOrigin : Cesium.VerticalOrigin.BOTTOM,
-      pixelOffset : new Cesium.Cartesian2(0, -9),
-      heightReference: Cesium.HeightReference.RELATIVE_TO_GROUND
-    }
-  });
+  var airburstMarker_id = "airburst";
+  var airburstLabel_name = "AIRBURST";
+  cesiumMarker(airburstMarker_id, airburstLabel_name, positionCartographic, detonationAltitude);
 }
 
 // Start off looking at Beijing.
