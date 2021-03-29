@@ -16,26 +16,15 @@ function appendFarhan() {
   cesium_textContainer[0].appendChild(node);
 }
 
-function createreloadButton() {
-  document.getElementById("ammoCount").textContent = 0
+function createButtons(ammo, buttonTitle, buttonId, func, elementId) {
+  document.getElementById("ammoCount").textContent = ammo;
   var btn = document.createElement("BUTTON");
-  btn.innerHTML = "Reload Weapon";
-  btn.id = "reloadButton";
-  btn.onclick = function() {reloadWeapon()};
-  var detonateNuke = document.getElementById("detonateText");
+  btn.innerHTML = buttonTitle;
+  btn.id = buttonId;
+  btn.onclick = function() {func()};
+  var detonateNuke = document.getElementById(elementId);
   detonateNuke.replaceWith(btn)
 }
-
-function createarmWarhead_button() {
-  document.getElementById("ammoCount").textContent = 1
-  var btn = document.createElement("BUTTON");
-  btn.innerHTML = "Arm Warhead";
-  btn.id = "armNuke_button";
-  btn.onclick = function() {armNuke()};
-  var armWarhead = document.getElementById("reloadButton");
-  armWarhead.replaceWith(btn)
-}
-
 function detonateText() {
   var detonateText = document.createElement("P");
   detonateText.id = "detonateText";
@@ -137,7 +126,7 @@ function reloadWeapon() {
   objectsId.forEach(removeObjects_iterator);
   estimatedCasualties(null, null);
   var img = document.getElementById("yield-distance-effect").removeAttribute("src")
-  createarmWarhead_button();
+  createButtons(1, "Arm Warhead", "armNuke_button", armNuke, "reloadButton");
 }
 
 var viewer = new Cesium.Viewer("cesiumContainer", {
@@ -339,13 +328,13 @@ function setMarkerInPos(positionCartographic){
       var estimatedCasualties_headerText = "Estimated Casualties:";
       var estimatedCasualties_bodyText = `${totalPopulation} people within 3.6 km radius dead`;
       estimatedCasualties(estimatedCasualties_headerText, estimatedCasualties_bodyText);
-      createreloadButton();
+      createButtons(0, "Reload Weapon", "reloadButton", reloadWeapon, "detonateText");
     }
     catch (err) {
       var error_headerText = "Cannot Estimate Casualties:";
       var error_bodyText = "No population data found"
       estimatedCasualties(error_headerText, error_bodyText)
-      createreloadButton();
+      createButtons(0, "Reload Weapon", "reloadButton", reloadWeapon, "detonateText");
     }
     // console.log(demographicsData);
   });
