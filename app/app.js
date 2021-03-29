@@ -10,7 +10,7 @@ function appendFarhan() {
   node.id = "Farhan";
   node.href = "https://github.com/farhannysf/global-thermonuclear-strike"
   node.target = "_blank"
-  var textnode = document.createTextNode("By Farhan Yusuf Nugroho");
+  var textnode = document.createTextNode("© Farhan Yusuf Nugroho 2021");
   var cesium_textContainer = document.getElementsByClassName("cesium-widget-credits");
   node.appendChild(textnode);
   cesium_textContainer[0].appendChild(node);
@@ -38,14 +38,18 @@ function kmtom(kilometer){
   return meter
 }
 
-function estimatedCasualties(headerText, bodyText) {
+function estimatedCasualties(headerText, bodyText, reload) {
   document.getElementById("estimatedCasualties").textContent = headerText
   document.getElementById("totalPopulation").textContent = bodyText
   var img = document.createElement("img");
   img.id = "yield-distance-effect"
   img.src = "assets/yield-distance-effect.png"; // Graphs of Nuclear Weapons Effects by Dr. Wm. Robert Johnston http://www.johnstonsarchive.net/nuclear/nukgr3.pdf
   img.className = "img"
-  var src = document.getElementById("yield-distance-effect").replaceWith(img);
+  if (reload === true) {
+    document.getElementById("yield-distance-effect").remove()
+    return
+  }
+  document.getElementById("image").appendChild(img);
 }
 
 function ringDescription(kpa, blast_structuralDamage) {
@@ -124,8 +128,7 @@ function removeObjects_iterator(value, index, array) {
 function reloadWeapon() {
   var objectsId = ["hypocenter", "airburst", "mcstem", "mchead", "ring1", "ring2", "ring3", "ring4", "ring5"];
   objectsId.forEach(removeObjects_iterator);
-  estimatedCasualties(null, null);
-  var img = document.getElementById("yield-distance-effect").removeAttribute("src")
+  estimatedCasualties(null, null, reload=true);
   createButtons(1, "Arm Warhead", "armNuke_button", armNuke, "reloadButton");
 }
 
@@ -327,13 +330,13 @@ function setMarkerInPos(positionCartographic){
       totalPopulation = demographicsData.TOTPOP.toLocaleString()
       var estimatedCasualties_headerText = "Estimated Casualties:";
       var estimatedCasualties_bodyText = `${totalPopulation} people within 3.6 km radius dead`;
-      estimatedCasualties(estimatedCasualties_headerText, estimatedCasualties_bodyText);
+      estimatedCasualties(estimatedCasualties_headerText, estimatedCasualties_bodyText, reload=false);
       createButtons(0, "Reload Weapon", "reloadButton", reloadWeapon, "detonateText");
     }
     catch (err) {
       var error_headerText = "Cannot Estimate Casualties:";
       var error_bodyText = "No population data found"
-      estimatedCasualties(error_headerText, error_bodyText)
+      estimatedCasualties(error_headerText, error_bodyText, reload=false)
       createButtons(0, "Reload Weapon", "reloadButton", reloadWeapon, "detonateText");
     }
     // console.log(demographicsData);
