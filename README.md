@@ -40,9 +40,9 @@ At the moment, this simulation only models:
 
 * Fixed detonation altitude, airburst at 750m AGL
 
-* Different overpressure levels to range of 5 overlapping radii with total fatal casualties estimation within the lethal range of nuclear explosion using Weighted Centroid geographic retrieval methodology from ArcGIS GeoEnrichment service to aggregate census data
+* Different overpressure levels to range of 5 overlapping radii that generates 5 rings with total fatal casualties estimation within the lethal range of nuclear explosion using Weighted Centroid geographic retrieval methodology from ArcGIS GeoEnrichment service to aggregate census data
 
-* Mushroom cloud modelling
+* Mushroom cloud
 
 * No other effects such as thermal radiation, ionizing radiation, and nuclear fallout contour are included yet
 
@@ -54,12 +54,15 @@ At the moment, this simulation only models:
 ## Desktop map control
 ![desktop-control](https://raw.githubusercontent.com/farhannysf/global-thermonuclear-strike/main/assets/docs/desktop-control.png)
 ## Mobile map control
+**Rotate your mobile device to use landscape orientation for best result**
+
 ![mobile-control](https://raw.githubusercontent.com/farhannysf/global-thermonuclear-strike/main/assets/docs/mobile-control.png)
 ## Detonating Warhead
 1. Navigate map to your desired detonation position, you can also search for a location by selecting the search button
 2. Left click / tap on **"Arm Warhead"** button
 3. Right click / Double tap on map to detonate the warhead
 4. Left click / tap on the resulting radii, mushroom cloud to inspect its properties
+5. Left click / tap on the **"Reload Weapon"** button to reset payload qty to 1 and start over
 
 ---
 
