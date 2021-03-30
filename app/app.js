@@ -53,12 +53,8 @@ function estimatedCasualties(headerText, bodyText, reload) {
 }
 
 function ringDescription(kpa, blast_structuralDamage) {
-  var ringDescription = `\
-  <img\
-    width="50%"\
-    style="float:left; margin: 0 1em 1em 0;"\
-    src="assets/overpressure-distance.png"/>\
-  <h3>\
+  var ringDescription_text =
+  `<h3>\
     Peak overpressure level:\
   </h3>\
   <p>\
@@ -68,27 +64,29 @@ function ringDescription(kpa, blast_structuralDamage) {
     Estimated Blast Structural Damage:\
   </h3>\
   <p>\
-    ${blast_structuralDamage}\
-  </p>` // The Effects of Nuclear Weapons. (1977). United States: Department of Defense.
-  return ringDescription
+    ${blast_structuralDamage}
+  </p>`
+  return ringDescription_text // The Effects of Nuclear Weapons. (1977). United States: Department of Defense.
 }
 
-function mushroomCloud_description(mushroomCloud_body) {
-  var mushroomCloud_description = `\
+function infoboxDescription(img, mc_headDescription, mc_stemDescription, ringDescription_text) {
+  var infoboxDescription = `\
   <img\
     width="50%"\
-    style="float:left; margin: 0 1em 1em 0;"\
-    src="assets/stabilized-cloud-dimensions.png"/>\
-  ${mushroomCloud_body}` // Nukemap by Alex Wellerstein https://nuclearsecrecy.com/nukemap/
-  return mushroomCloud_description
+    style="float:right; margin: 0px -0.75em 0em 0px;"\
+    src="${img}"/>\
+  ${mc_headDescription}
+  ${mc_stemDescription}
+  ${ringDescription_text}`
+  return infoboxDescription
 }
 
-function ring(ringId, positionCartographic, ringRadius_km, ring_kpa, ring_blast_structuralDamage, ringRadius_m, ringColor, ringColor_alpha) {
+function ring(ringId, positionCartographic, ringRadius_km, img, ringDescription_text, ringRadius_m, ringColor, ringColor_alpha) {
   viewer.entities.add({
     id: ringId,
     position: Cesium.Cartesian3.fromRadians(positionCartographic.longitude, positionCartographic.latitude, 10),
     name: ringRadius_km.toFixed(1) + " km radius",
-    description: ringDescription(ring_kpa, ring_blast_structuralDamage),
+    description: infoboxDescription(img, '', '', ringDescription_text),
     ellipse: {
       semiMinorAxis: ringRadius_m,
       semiMajorAxis: ringRadius_m,
@@ -185,16 +183,18 @@ function armNuke() {
 
 function setMarkerInPos(positionCartographic){
   viewer.pickTranslucentDepth = true;
+  var ringImg = "assets/overpressure-distance.png"
   var ring1Id = "ring1"
   var ring1Radius_km = Math.pow(warheadYield,0.33)*0.24; // Blast Wave Effects Calculator by Jean M. Bele, Physics Dept., Laboratory for Nuclear Science, MIT https://nuclearweaponsedproj.mit.edu/Node/104
   // console.log(ring1Radius_km)
   var ring1Radius_m = kmtom(ring1Radius_km);
   var ring1_kpa = 137.89; // 20 psi
   var ring1_blast_structuralDamage = "Heavily built concrete buildings are severely damaged or demolished.";
+  var ring1Description_text = ringDescription(ring1_kpa, ring1_blast_structuralDamage);
   // console.log(ring1Radius_m)
   ring1Color = "RED";
   ring1Color_alpha = 0.3;
-  ring(ring1Id, positionCartographic, ring1Radius_km, ring1_kpa, ring1_blast_structuralDamage, ring1Radius_m, ring1Color, ring1Color_alpha);
+  ring(ring1Id, positionCartographic, ring1Radius_km, ringImg, ring1Description_text, ring1Radius_m, ring1Color, ring1Color_alpha);
 
   var ring2Id = "ring2"
   var ring2Radius_km = Math.pow(warheadYield, 0.33) * 0.37; // Blast Wave Effects Calculator by Jean M. Bele, Physics Dept., Laboratory for Nuclear Science, MIT https://nuclearweaponsedproj.mit.edu/Node/104
@@ -203,9 +203,10 @@ function setMarkerInPos(positionCartographic){
   // console.log(ring2Radius_m)
   var ring2_kpa = 68.95; // 10 psi
   var ring2_blast_structuralDamage = "Reinforced concrete buildings are severely damaged or demolished.";
+  var ring2Description_text = ringDescription(ring2_kpa, ring2_blast_structuralDamage);
   var ring2Color = "RED";
   var ring2Color_alpha = 0.2;
-  ring(ring2Id, positionCartographic, ring2Radius_km, ring2_kpa, ring2_blast_structuralDamage, ring2Radius_m, ring2Color, ring2Color_alpha);
+  ring(ring2Id, positionCartographic, ring2Radius_km, ringImg, ring2Description_text, ring2Radius_m, ring2Color, ring2Color_alpha);
 
   var ring3Id = "ring3"
   var ring3Radius_km = Math.pow(warheadYield,0.33)*0.57; // Blast Wave Effects Calculator by Jean M. Bele, Physics Dept., Laboratory for Nuclear Science, MIT https://nuclearweaponsedproj.mit.edu/Node/104
@@ -214,9 +215,10 @@ function setMarkerInPos(positionCartographic){
   // console.log(ring3Radius_m)
   var ring3_kpa = 34.47; // 5 psi
   var ring3_blast_structuralDamage = "Most buildings collapse.";
+  var ring3Description_text = ringDescription(ring3_kpa, ring3_blast_structuralDamage);
   var ring3Color = "RED";
   var ring3Color_alpha = 0.2;
-  ring(ring3Id, positionCartographic, ring3Radius_km, ring3_kpa, ring3_blast_structuralDamage, ring3Radius_m, ring3Color, ring3Color_alpha);
+  ring(ring3Id, positionCartographic, ring3Radius_km, ringImg, ring3Description_text, ring3Radius_m, ring3Color, ring3Color_alpha);
 
   var ring4Id = "ring4"
   var ring4Radius_km = Math.pow(warheadYield,0.33)*0.79; // Blast Wave Effects Calculator by Jean M. Bele, Physics Dept., Laboratory for Nuclear Science, MIT https://nuclearweaponsedproj.mit.edu/Node/104
@@ -225,9 +227,10 @@ function setMarkerInPos(positionCartographic){
   // console.log(ring4Radius_m)
   var ring4_kpa = 20.68; // 3 psi
   var ring4_blast_structuralDamage = "Residential structures collapse.";
+  var ring4Description_text = ringDescription(ring4_kpa, ring4_blast_structuralDamage);
   var ring4Color = "RED";
   var ring4Color_alpha = 0.3;
-  ring(ring4Id, positionCartographic, ring4Radius_km, ring4_kpa, ring4_blast_structuralDamage, ring4Radius_m, ring4Color, ring4Color_alpha);
+  ring(ring4Id, positionCartographic, ring4Radius_km, ringImg, ring4Description_text, ring4Radius_m, ring4Color, ring4Color_alpha);
 
   var ring5Id = "ring5"
   var ring5Radius_km = Math.pow(warheadYield, 0.33) * 1.66; // Blast Wave Effects Calculator by Jean M. Bele, Physics Dept., Laboratory for Nuclear Science, MIT https://nuclearweaponsedproj.mit.edu/Node/104
@@ -236,15 +239,20 @@ function setMarkerInPos(positionCartographic){
   // console.log(ring5Radius_m)
   var ring5_kpa = 6.89; // 1 psi
   var ring5_blast_structuralDamage = "Window glass shatters.";
+  var ring5Description_text = ringDescription(ring5_kpa, ring5_blast_structuralDamage);
   var ring5Color = "YELLOW";
   var ring5Color_alpha = 0.2;
-  ring(ring5Id, positionCartographic, ring5Radius_km, ring5_kpa, ring5_blast_structuralDamage, ring5Radius_m, ring5Color, ring5Color_alpha);
+  ring(ring5Id, positionCartographic, ring5Radius_km, ringImg, ring5Description_text, ring5Radius_m, ring5Color, ring5Color_alpha);
 
-  fireballRadius = (Math.pow(warheadYield,0.4)*110)*0.3048; // Nuclear Fireball Calculator by Jean M. Bele, Physics Dept., Laboratory for Nuclear Science, MIT https://nuclearweaponsedproj.mit.edu/Node/105
+  var mcImg = "assets/stabilized-cloud-dimensions.png";
+  var fireballRadius = (Math.pow(warheadYield, 0.4) * 110) * 0.3048; // Nuclear Fireball Calculator by Jean M. Bele, Physics Dept., Laboratory for Nuclear Science, MIT https://nuclearweaponsedproj.mit.edu/Node/105
   // console.log(fireballRadius)
-  fireball_radiusFixed = fireballRadius.toFixed(1);
+  var fireball_radiusFixed = fireballRadius.toFixed(1);
+  var fireball_kpa = 1378.95;
+  var fireball_blast_structuralDamage = "Anything inside the fireball is effectively vaporized."
+  var fireballDescription_text = ringDescription(fireball_kpa, fireball_blast_structuralDamage);
   // console.log(fireball_radiusFixed)
-  mushroomCloud_stem =
+  var mc_stemDescription =
   `<h3>\
     Mushroom Cloud Altitude:\
   </h3>\
@@ -256,25 +264,12 @@ function setMarkerInPos(positionCartographic){
   </h3>\
   <p>\
     ${fireball_radiusFixed} m\
-  </p>\
-  <h3>\
-    Peak overpressure level:\
-  </h3>\
-  <p>\
-    1378.95 kPa\
-  </p>\
-  <h3>\
-  <br>\
-    Estimated Blast Structural Damage:\
-  </h3>\
-  <p>\
-    Anything inside the fireball is effectively vaporized.\
-  </p>`; // Nukemap by Alex Wellerstein https://nuclearsecrecy.com/nukemap/
+  </p>\ ` // Nukemap by Alex Wellerstein https://nuclearsecrecy.com/nukemap/
 
-  var mcStem = viewer.entities.add({
+  viewer.entities.add({
     id:"mcstem",
     name: "Fireball Radius, Mushroom Cloud Stem",
-    description: mushroomCloud_description(mushroomCloud_stem),
+    description: infoboxDescription(mcImg, '', mc_stemDescription, fireballDescription_text),
     position: Cesium.Cartesian3.fromRadians(positionCartographic.longitude, positionCartographic.latitude),
     ellipse: {
       semiMinorAxis: fireballRadius,
@@ -286,7 +281,7 @@ function setMarkerInPos(positionCartographic){
     },
   });
 
-  mushroomCloud_head =
+  var mc_headDescription =
   '<h3>\
     Mushroom Cloud Head Diameter:\
   </h3>\
@@ -300,10 +295,10 @@ function setMarkerInPos(positionCartographic){
     6.02 km\
   </p>'; // Nukemap by Alex Wellerstein https://nuclearsecrecy.com/nukemap/
 
-  var mcHead = viewer.entities.add({
+  viewer.entities.add({
     id: "mchead",
     name: "Mushroom Cloud Head",
-    description: mushroomCloud_description(mushroomCloud_head),
+    description: infoboxDescription(mcImg, mc_headDescription, '', ''),
     position: Cesium.Cartesian3.fromRadians(positionCartographic.longitude, positionCartographic.latitude, 11800), // Nukemap by Alex Wellerstein https://nuclearsecrecy.com/nukemap/
     ellipsoid: {
       radii: new Cesium.Cartesian3(10400, 10400, 6020), // Nukemap by Alex Wellerstein https://nuclearsecrecy.com/nukemap/
@@ -353,5 +348,5 @@ function setMarkerInPos(positionCartographic){
 
 // Start off looking at Beijing.
 viewer.scene.camera.flyTo({
-destination: Cesium.Cartesian3.fromDegrees(116.383331, 39.916668, 700)
+  destination: Cesium.Cartesian3.fromDegrees(116.383331, 39.916668, 15000)
 }); 
